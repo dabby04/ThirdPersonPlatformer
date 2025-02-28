@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     // Movement input
     private Vector2 moveInput;
     private bool isGrounded;
+    private bool doubleJump;
+    public float delayBeforeDoubleJump;
 
     // Start is called before the first frame update
     void Start()
@@ -32,18 +34,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     { //checking that when the ball enters, it is on the ground
-        if(other.gameObject.CompareTag("Ground")){
-            Vector3 normal=other.GetContact(0).normal;
-            if(normal==Vector3.up){ //checking that when it hits an obstacle, it cannot double jump
-                isGrounded=true;
-            } 
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            // Vector3 normal=other.GetContact(0).normal;
+            // if(normal==Vector3.up){ //checking that when it hits an obstacle, it cannot double jump
+            isGrounded = true;
+            doubleJump = false;
+            // } 
         }
     }
 
     private void OnCollisionExit(Collision other)
     { //when the ball is off the ground, set the value to false
-        if(other.gameObject.CompareTag("Ground")){
-            isGrounded=false; 
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 
@@ -54,7 +59,18 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            Invoke("EnableDoubleJump", delayBeforeDoubleJump); //invoke calls enable double jump with a delay
         }
+        if (doubleJump)
+        {
+            doubleJump = false;
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    void EnableDoubleJump()
+    {
+        doubleJump = true; //set double jumping to true
     }
 
     // Handle reset event
