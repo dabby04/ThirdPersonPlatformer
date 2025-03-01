@@ -34,13 +34,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     { //checking that when the ball enters, it is on the ground
+        Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("Ground"))
         {
-            // Vector3 normal=other.GetContact(0).normal;
-            // if(normal==Vector3.up){ //checking that when it hits an obstacle, it cannot double jump
-            isGrounded = true;
-            doubleJump = false;
-            // } 
+            Vector3 normal = other.GetContact(0).normal;
+            if (normal == Vector3.up)
+            { //checking that when it hits an obstacle, it cannot double jump
+                isGrounded = true;
+                doubleJump = false;
+            }
         }
     }
 
@@ -58,8 +60,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Jump triggered");
         if (isGrounded)
         {
+            rb.linearVelocity=new Vector3(rb.linearVelocity.x,0,rb.linearVelocity.z); //ensures jumps are consistent
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            Invoke("EnableDoubleJump", delayBeforeDoubleJump); //invoke calls enable double jump with a delay
+            Invoke("EnableDoubleJump", delayBeforeDoubleJump);//invoke calls enable double jump with a delay
         }
         if (doubleJump)
         {
