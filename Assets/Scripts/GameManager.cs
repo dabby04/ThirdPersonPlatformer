@@ -37,9 +37,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-     public void AddScore(int amount)
+     public void AddScore()
     {
-        score += amount;
+        score ++;
         UpdateScoreUI();
     }
 }

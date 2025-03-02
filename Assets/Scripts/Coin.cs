@@ -8,8 +8,10 @@ public class Coin : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.AddScore(scoreValue);
+            Debug.Log("Coin collected by player!");
             Destroy(gameObject);
+            GameManager.Instance.AddScore();
+            
         }
 
     }
