@@ -130,17 +130,7 @@ public class PlayerController : MonoBehaviour
                 EndDash();
             }
         }
-    }
 
-    private void EndDash()
-    {
-        isDashing = false;
-        rb.linearVelocity = Vector3.zero; // Stop the dash velocity
-    }
-
-    // FixedUpdate is called at fixed time intervals for physics calculations
-    private void FixedUpdate()
-    {
         // Calculate camera-relative movement
         Vector3 moveDirection = cameraPlayer.forward * moveInput.y + cameraPlayer.right * moveInput.x;
         moveDirection.y = 0f; // Make sure we don't apply any vertical movement
@@ -160,4 +150,11 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = velocity;  // Apply the new velocity to the Rigidbody
         }
     }
+
+    private void EndDash()
+    {
+        isDashing = false;
+        rb.linearVelocity = Vector3.zero; // Stop the dash velocity
+    }
+
 }
