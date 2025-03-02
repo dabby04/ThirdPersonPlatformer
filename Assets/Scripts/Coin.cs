@@ -3,18 +3,18 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     public float rotateSpeed;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int scoreValue = 0;
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GameManager.Instance.AddScore(scoreValue);
+            Destroy(gameObject);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
-    private void FixedUpdate(){
-        transform.Rotate(0,rotateSpeed * Time.fixedDeltaTime,0);
+    private void FixedUpdate()
+    {
+        transform.Rotate(0, rotateSpeed * Time.fixedDeltaTime, 0);
     }
 }

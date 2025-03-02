@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour
                 doubleJump = false;
             }
         }
+        if (other.gameObject.tag == "Coin")
+        { //refering to a specific gameobject
+            Destroy(other.gameObject); //refers to the gameObject that you want to destroy
+        }
     }
 
     private void OnCollisionExit(Collision other)
@@ -60,7 +64,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Jump triggered");
         if (isGrounded)
         {
-            rb.linearVelocity=new Vector3(rb.linearVelocity.x,0,rb.linearVelocity.z); //ensures jumps are consistent
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z); //ensures jumps are consistent
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             Invoke("EnableDoubleJump", delayBeforeDoubleJump);//invoke calls enable double jump with a delay
         }
