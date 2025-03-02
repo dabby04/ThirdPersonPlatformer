@@ -9,6 +9,9 @@ public class InputManager : MonoBehaviour
     // Event for space bar (e.g., jumping)
     public UnityEvent OnSpacePressed = new UnityEvent();
 
+    //Event for Dash
+    public UnityEvent OnDash = new UnityEvent();
+
     // Update is called once per frame
     void Update()
     {
@@ -41,5 +44,9 @@ public class InputManager : MonoBehaviour
             input += Vector2.down;
         }
             OnMove?.Invoke(input);
+        
+        if(Input.GetKey(KeyCode.Z)){
+            OnDash?.Invoke();
+        }
     }
 }

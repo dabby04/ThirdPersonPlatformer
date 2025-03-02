@@ -7,12 +7,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputManager inputManager;  // Reference to the InputManager to get player input
     private Rigidbody rb;
     [SerializeField] float jumpForce;
+    [SerializeField] float dashSpeed;
+    [SerializeField] float dashDuration;
+    [SerializeField] float dashCooldown;
 
     // Movement input
     private Vector2 moveInput;
     private bool isGrounded;
     private bool doubleJump;
     public float delayBeforeDoubleJump;
+
+    // Dash variables
+    private bool isDashing = false;
+    private float dashTime = 0f;
+    private float lastDashTime = -999f;
+    private Vector3 dashDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
         // Subscribe to space bar event (e.g., jumping)
         inputManager.OnSpacePressed.AddListener(HandleJump);
+
+        inputManager.OnDash.AddListener(HandleDash);
     }
 
     // Handle movement input from the InputManager
@@ -80,6 +91,26 @@ public class PlayerController : MonoBehaviour
         doubleJump = true; //set double jumping to true
     }
 
+    private void HandleDash()
+    {
+        Debug.Log("Dash Triggered");
+        if (Time.time > lastDashTime + dashCooldown && !isDashing)
+        {
+            isDashing = true;
+            dashTime = dashDuration;
+            lastDashTime = Time.time;
+
+            // Get the dash direction based on camera and player facing
+            dashDirection = cameraPlayer.forward;
+
+            // Ensure we don't have any vertical movement during the dash
+            dashDirection.y = 0;
+
+            // Apply dash velocity
+            rb.linearVelocity = dashDirection * dashSpeed;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -91,6 +122,20 @@ public class PlayerController : MonoBehaviour
             rotating.y = cameraPlayer.rotation.eulerAngles.y;  // Keep the rotation around the y-axis in sync with the camera
             transform.rotation = Quaternion.Euler(rotating);
         }
+        if (isDashing)
+        {
+            dashTime -= Time.deltaTime;
+            if (dashTime <= 0)
+            {
+                EndDash();
+            }
+        }
+    }
+
+    private void EndDash()
+    {
+        isDashing = false;
+        rb.linearVelocity = Vector3.zero; // Stop the dash velocity
     }
 
     // FixedUpdate is called at fixed time intervals for physics calculations
@@ -100,16 +145,19 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = cameraPlayer.forward * moveInput.y + cameraPlayer.right * moveInput.x;
         moveDirection.y = 0f; // Make sure we don't apply any vertical movement
 
-        // Apply movement velocity to the Rigidbody
-        Vector3 velocity = rb.linearVelocity;
+        if (!isDashing)
+        {
+            // Apply movement velocity to the Rigidbody
+            Vector3 velocity = rb.linearVelocity;
 
-        // Adjust the velocity in the x and z axes based on the camera-relative move direction
-        velocity.x = moveDirection.x * speed;
-        velocity.z = moveDirection.z * speed;
+            // Adjust the velocity in the x and z axes based on the camera-relative move direction
+            velocity.x = moveDirection.x * speed;
+            velocity.z = moveDirection.z * speed;
 
-        // Keep the current vertical velocity (e.g., for gravity or jumping)
-        velocity.y = rb.linearVelocity.y;
+            // Keep the current vertical velocity (e.g., for gravity or jumping)
+            velocity.y = rb.linearVelocity.y;
 
-        rb.linearVelocity = velocity;  // Apply the new velocity to the Rigidbody
+            rb.linearVelocity = velocity;  // Apply the new velocity to the Rigidbody
+        }
     }
 }

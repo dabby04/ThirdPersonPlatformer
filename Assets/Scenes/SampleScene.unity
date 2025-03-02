@@ -1977,6 +1977,9 @@ MonoBehaviour:
   cameraPlayer: {fileID: 330585546}
   inputManager: {fileID: 926252711}
   jumpForce: 5
+  dashSpeed: 15
+  dashDuration: 0.2
+  dashCooldown: 1
   delayBeforeDoubleJump: 0
 --- !u!54 &902155233
 Rigidbody:
@@ -2096,6 +2099,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnSpacePressed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDash:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &926252712
