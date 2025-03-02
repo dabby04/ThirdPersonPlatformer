@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
         // Capture movement input (WASD or Arrow Keys)
         Vector2 input = Vector2.zero;
 
-        // Check for horizontal movement (A/D or Left/Right arrow keys)
+        // Check for horizontal movement (A/D)
         if (Input.GetKey(KeyCode.A))
         {
             input += Vector2.left;
@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
             input += Vector2.right;
         }
 
-        // Check for vertical movement (W/S or Up/Down arrow keys)
+        // Check for vertical movement (W/S)
         if (Input.GetKey(KeyCode.W))
         {
             input += Vector2.up;

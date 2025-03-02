@@ -80,13 +80,6 @@ public class PlayerController : MonoBehaviour
         doubleJump = true; //set double jumping to true
     }
 
-    // Handle reset event
-    private void HandleReset()
-    {
-        // Implement reset functionality here (e.g., reset position or game state)
-        Debug.Log("Reset triggered");
-    }
-
     // Update is called once per frame
     void Update()
     {
