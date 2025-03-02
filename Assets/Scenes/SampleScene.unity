@@ -145,7 +145,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19493292}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 76787321482364f6e99424f66e75607b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1876,7 +1876,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902155227}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4363bef7dcf8e42eb8d18d8d84498b1e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1973,7 +1973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4edbe3c84ca940d889b8584aaf76ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 3
   cameraPlayer: {fileID: 330585546}
   inputManager: {fileID: 926252711}
   jumpForce: 5
